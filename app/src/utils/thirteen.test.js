@@ -38,264 +38,264 @@ test('Identify Pairs', () => {
   let newDeck = deckHelper.createDeck(1, false, true);
 
   //single card
-  let deck = newDeck.filter((c) => c.name === 'two' && c.suit === 'spade');
+  let deck = newDeck.filter((c) => c.name === 'three' && c.suit === 'spade');
   var single = thirteen.identifyPairs(deck);
 
   expect(single.length).toBe(0);
 
   //single pair
-  deck = newDeck.filter((c) => c.name === 'two');
-  var two = thirteen.identifyPairs(deck);
+  deck = newDeck.filter((c) => c.name === 'three');
+  var three = thirteen.identifyPairs(deck);
 
-  expect(two.length).toBe(1);
-  expect(two[0].type).toBe('pair');
-  expect(two[0].name).toBe('two');
+  expect(three.length).toBe(1);
+  expect(three[0].type).toBe('pair');
+  expect(three[0].value).toBe(3);
 
   //multiple pairs
-  deck = newDeck.filter((c) => c.name === 'two' || c.name === 'three');
-  var twoThree = thirteen.identifyPairs(deck);
+  deck = newDeck.filter((c) => c.name === 'three' || c.name === 'four');
+  var threefour = thirteen.identifyPairs(deck);
 
-  expect(twoThree.length).toBe(2);
-  expect(twoThree[0].type).toBe('pair');
-  expect(twoThree[0].name).toBe('two');
-  expect(twoThree[1].type).toBe('pair');
-  expect(twoThree[1].name).toBe('three');
+  expect(threefour.length).toBe(2);
+  expect(threefour[0].type).toBe('pair');
+  expect(threefour[0].value).toBe(3);
+  expect(threefour[1].type).toBe('pair');
+  expect(threefour[1].value).toBe(4);
 });
 
 test('Identify Unique Pairs', () => {
   let newDeck = deckHelper.createDeck(1, false, true);
 
   //single card
-  let deck = newDeck.filter((c) => c.name === 'two' && c.suit === 'spade');
+  let deck = newDeck.filter((c) => c.name === 'three' && c.suit === 'spade');
   var single = thirteen.identifyPairsAll(deck);
 
   expect(single.length).toBe(0);
 
-  //all pairs of two
-  deck = newDeck.filter((c) => c.name === 'two');
-  var two = thirteen.identifyPairsAll(deck);
+  //all pairs of three
+  deck = newDeck.filter((c) => c.name === 'three');
+  var three = thirteen.identifyPairsAll(deck);
 
-  expect(two.length).toBe(1);
-  expect(two[0].sets.length).toBe(6);
-  expect(two[0].type).toBe('pair');
-  expect(two[0].name).toBe('two');
+  expect(three.length).toBe(1);
+  expect(three[0].sets.length).toBe(6);
+  expect(three[0].type).toBe('pair');
+  expect(three[0].value).toBe(3);
 
-  //all pairs of two, no spaid
-  deck = newDeck.filter((c) => c.name === 'two' && c.suit != 'spade');
-  var two = thirteen.identifyPairsAll(deck);
+  //all pairs of three, no spaid
+  deck = newDeck.filter((c) => c.name === 'three' && c.suit != 'spade');
+  var three = thirteen.identifyPairsAll(deck);
 
-  expect(two.length).toBe(1);
-  expect(two[0].sets.length).toBe(3);
-  expect(two[0].type).toBe('pair');
-  expect(two[0].name).toBe('two');
+  expect(three.length).toBe(1);
+  expect(three[0].sets.length).toBe(3);
+  expect(three[0].type).toBe('pair');
+  expect(three[0].value).toBe(3);
 
   //multiple pairs
-  deck = newDeck.filter((c) => c.name === 'two' || c.name === 'three');
-  var twoThree = thirteen.identifyPairsAll(deck);
+  deck = newDeck.filter((c) => c.name === 'three' || c.name === 'four');
+  var threefour = thirteen.identifyPairsAll(deck);
 
-  expect(twoThree.length).toBe(2);
-  expect(twoThree[0].sets.length).toBe(6);
-  expect(twoThree[0].type).toBe('pair');
-  expect(twoThree[0].name).toBe('two');
-  expect(twoThree[1].sets.length).toBe(6);
-  expect(twoThree[1].type).toBe('pair');
-  expect(twoThree[1].name).toBe('three');
+  expect(threefour.length).toBe(2);
+  expect(threefour[0].sets.length).toBe(6);
+  expect(threefour[0].type).toBe('pair');
+  expect(threefour[0].value).toBe(3);
+  expect(threefour[1].sets.length).toBe(6);
+  expect(threefour[1].type).toBe('pair');
+  expect(threefour[1].value).toBe(4);
 });
 
 test('Identify Triples', () => {
   let newDeck = deckHelper.createDeck(1, false, true);
 
   //single card
-  let deck = newDeck.filter((c) => c.name === 'two' && c.suit === 'spade');
+  let deck = newDeck.filter((c) => c.name === 'three' && c.suit === 'spade');
   var single = thirteen.identifyTriples(deck);
 
   expect(single.length).toBe(0);
 
   //single pair
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 2);
-  var two = thirteen.identifyTriples(deck);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 2);
+  var three = thirteen.identifyTriples(deck);
 
-  expect(two.length).toBe(0);
+  expect(three.length).toBe(0);
 
   //single triple
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 3);
-  var two = thirteen.identifyTriples(deck);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 3);
+  var three = thirteen.identifyTriples(deck);
 
-  expect(two.length).toBe(1);
-  expect(two[0].type).toBe('triple');
-  expect(two[0].name).toBe('two');
+  expect(three.length).toBe(1);
+  expect(three[0].type).toBe('triple');
+  expect(three[0].value).toBe(3);
 
-  //full two's
-  deck = newDeck.filter((c) => c.name === 'two');
-  var two = thirteen.identifyTriples(deck);
+  //full three's
+  deck = newDeck.filter((c) => c.name === 'three');
+  var three = thirteen.identifyTriples(deck);
 
-  expect(two.length).toBe(1);
-  expect(two[0].type).toBe('triple');
-  expect(two[0].name).toBe('two');
+  expect(three.length).toBe(1);
+  expect(three[0].type).toBe('triple');
+  expect(three[0].value).toBe(3);
 
-  //full two's three's
-  deck = newDeck.filter((c) => c.name === 'two' || c.name === 'three');
-  var two = thirteen.identifyTriples(deck);
+  //full three's four's
+  deck = newDeck.filter((c) => c.name === 'three' || c.name === 'four');
+  var three = thirteen.identifyTriples(deck);
 
-  expect(two.length).toBe(2);
-  expect(two[0].type).toBe('triple');
-  expect(two[0].name).toBe('two');
-  expect(two[1].type).toBe('triple');
-  expect(two[1].name).toBe('three');
+  expect(three.length).toBe(2);
+  expect(three[0].type).toBe('triple');
+  expect(three[0].value).toBe(3);
+  expect(three[1].type).toBe('triple');
+  expect(three[1].value).toBe(4);
 
-  //full two's, partial three's
-  deck = newDeck.filter((c) => c.name === 'two' || (c.name === 'three' && c.suitValue < 3));
-  var two = thirteen.identifyTriples(deck);
+  //full three's, partial four's
+  deck = newDeck.filter((c) => c.name === 'three' || (c.name === 'four' && c.suitValue < 3));
+  var three = thirteen.identifyTriples(deck);
 
-  expect(two.length).toBe(2);
-  expect(two[0].type).toBe('triple');
-  expect(two[0].name).toBe('two');
-  expect(two[1].type).toBe('triple');
-  expect(two[1].name).toBe('three');
+  expect(three.length).toBe(2);
+  expect(three[0].type).toBe('triple');
+  expect(three[0].value).toBe(3);
+  expect(three[1].type).toBe('triple');
+  expect(three[1].value).toBe(4);
 });
 
 test('Identify Unique Triples', () => {
   let newDeck = deckHelper.createDeck(1, false, true);
 
   //single card
-  let deck = newDeck.filter((c) => c.name === 'two' && c.suit === 'spade');
+  let deck = newDeck.filter((c) => c.name === 'three' && c.suit === 'spade');
   var single = thirteen.identifyTriplesAll(deck);
 
   expect(single.length).toBe(0);
 
   //single pair
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 2);
-  var two = thirteen.identifyTriplesAll(deck);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 2);
+  var three = thirteen.identifyTriplesAll(deck);
 
-  expect(two.length).toBe(0);
+  expect(three.length).toBe(0);
 
   //single triple
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 3);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 3);
   var triple = thirteen.identifyTriplesAll(deck);
 
   expect(triple.length).toBe(1);
   expect(triple[0].sets.length).toBe(1);
   expect(triple[0].type).toBe('triple');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
 
   //single triple from quad
-  deck = newDeck.filter((c) => c.name === 'two');
+  deck = newDeck.filter((c) => c.name === 'three');
   var triple = thirteen.identifyTriplesAll(deck);
 
   expect(triple.length).toBe(1);
   expect(triple[0].sets.length).toBe(4);
   expect(triple[0].type).toBe('triple');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
 
-  //full two's three's
-  deck = newDeck.filter((c) => c.name === 'two' || c.name === 'three');
+  //full three's four's
+  deck = newDeck.filter((c) => c.name === 'three' || c.name === 'four');
   var triple = thirteen.identifyTriplesAll(deck);
 
   expect(triple.length).toBe(2);
   expect(triple[0].sets.length).toBe(4);
   expect(triple[0].type).toBe('triple');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
   expect(triple[1].sets.length).toBe(4);
   expect(triple[1].type).toBe('triple');
-  expect(triple[1].name).toBe('three');
+  expect(triple[1].value).toBe(4);
 
-  //full two's, partial three's
-  deck = newDeck.filter((c) => c.name === 'two' || (c.name === 'three' && c.suitValue < 3));
+  //full three's, partial four's
+  deck = newDeck.filter((c) => c.name === 'three' || (c.name === 'four' && c.suitValue < 3));
   var triple = thirteen.identifyTriplesAll(deck);
 
   expect(triple.length).toBe(2);
   expect(triple[0].sets.length).toBe(4);
   expect(triple[0].type).toBe('triple');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
   expect(triple[1].sets.length).toBe(1);
   expect(triple[1].type).toBe('triple');
-  expect(triple[1].name).toBe('three');
+  expect(triple[1].value).toBe(4);
 });
 
 test('Identify Quads', () => {
   let newDeck = deckHelper.createDeck(1, false, true);
 
   //single card
-  let deck = newDeck.filter((c) => c.name === 'two' && c.suit === 'spade');
+  let deck = newDeck.filter((c) => c.name === 'three' && c.suit === 'spade');
   var single = thirteen.identifyQuads(deck);
 
   expect(single.length).toBe(0);
 
   //single pair
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 2);
-  var two = thirteen.identifyQuads(deck);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 2);
+  var three = thirteen.identifyQuads(deck);
 
-  expect(two.length).toBe(0);
+  expect(three.length).toBe(0);
 
   //single triple
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 3);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 3);
   var triple = thirteen.identifyQuads(deck);
 
   expect(triple.length).toBe(0);
 
-  //single triple
-  deck = newDeck.filter((c) => c.name === 'two');
+  //single quad
+  deck = newDeck.filter((c) => c.name === 'three');
   var triple = thirteen.identifyQuads(deck);
 
   expect(triple.length).toBe(1);
   expect(triple[0].type).toBe('quad');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
 
   //single  from quad
-  deck = newDeck.filter((c) => c.name === 'two');
+  deck = newDeck.filter((c) => c.name === 'three');
   var triple = thirteen.identifyQuads(deck);
 
   expect(triple.length).toBe(1);
   expect(triple[0].type).toBe('quad');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
 
-  //full two's three's
-  deck = newDeck.filter((c) => c.name === 'two' || c.name === 'three');
+  //full three's four's
+  deck = newDeck.filter((c) => c.name === 'three' || c.name === 'four');
   var triple = thirteen.identifyQuads(deck);
 
   expect(triple.length).toBe(2);
   expect(triple[0].type).toBe('quad');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
   expect(triple[1].type).toBe('quad');
-  expect(triple[1].name).toBe('three');
+  expect(triple[1].value).toBe(4);
 
-  //full two's, partial three's
-  deck = newDeck.filter((c) => c.name === 'two' || (c.name === 'three' && c.suitValue < 3));
+  //full three's, partial four's
+  deck = newDeck.filter((c) => c.name === 'three' || (c.name === 'four' && c.suitValue < 3));
   var triple = thirteen.identifyQuads(deck);
 
   expect(triple.length).toBe(1);
   expect(triple[0].type).toBe('quad');
-  expect(triple[0].name).toBe('two');
+  expect(triple[0].value).toBe(3);
 });
 
 test('Identify Straights', () => {
   let newDeck = deckHelper.createDeck(1, false, true);
 
   //single card
-  let deck = newDeck.filter((c) => c.name === 'two' && c.suit === 'spade');
+  let deck = newDeck.filter((c) => c.name === 'three' && c.suit === 'spade');
   let set = thirteen.identifyStraights(deck);
 
   expect(set.length).toBe(0);
 
   //single pair
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 2);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 2);
   set = thirteen.identifyStraights(deck);
 
   expect(set.length).toBe(0);
 
   //single triple
-  deck = newDeck.filter((c) => c.name === 'two' && c.suitValue < 3);
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 3);
   set = thirteen.identifyStraights(deck);
 
   expect(set.length).toBe(0);
 
   //single quad
-  deck = newDeck.filter((c) => c.name === 'two');
+  deck = newDeck.filter((c) => c.name === 'three');
   set = thirteen.identifyStraights(deck);
 
   expect(set.length).toBe(0);
 
-  //full deck, find straights of three
+  //full deck, find straights of four
   set = thirteen.identifyStraights(newDeck, 3);
 
   set.forEach((a) => expect(a.length).toBe(3));
@@ -332,12 +332,12 @@ test('Identify Straights', () => {
   expect(set.length).toBe(8);
 
   set = thirteen.identifyStraights(deck, 6);
- 
+
   set.forEach((a) => expect(a.length).toBe(6));
   expect(set.length).toBe(7);
 
   set = thirteen.identifyStraights(deck, 12);
- 
+
   set.forEach((a) => expect(a.length).toBe(12));
   expect(set.length).toBe(1);
 
@@ -350,8 +350,38 @@ test('Identify Bomb', () => {
   let newDeck = deckHelper.createDeck(1, false, true);
 
   //single card
-  let deck = [...newDeck];
+  let deck = newDeck.filter((c) => c.name === 'three' && c.suit === 'spade');
   let set = thirteen.identifyBombs(deck);
 
-  //console.log(set);
-})
+  expect(set.length).toBe(0);
+
+  //single pair
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 2);
+  set = thirteen.identifyBombs(deck);
+
+  expect(set.length).toBe(0);
+
+  //single triple
+  deck = newDeck.filter((c) => c.name === 'three' && c.suitValue < 3);
+  set = thirteen.identifyBombs(deck);
+
+  expect(set.length).toBe(0);
+
+  //single quad
+  deck = newDeck.filter((c) => c.name === 'three');
+  set = thirteen.identifyBombs(deck);
+
+  expect(set.length).toBe(0);
+
+  //full deck, find bombs of 3 pairs
+  set = thirteen.identifyBombs(newDeck, 3);
+
+  set.forEach((a) => expect(a.length).toBe(3));
+  expect(set.length).toBe(10);
+
+  //full deck, find bombs of 3 pairs
+  set = thirteen.identifyBombs(newDeck, 3);
+
+  set.forEach((a) => expect(a.length).toBe(3));
+  expect(set.length).toBe(10);
+});

@@ -66,11 +66,11 @@ const identifySingle = (cards) => {
 };
 
 const identifyPairs = (cards) => {
-  return [...new Set(cards.map((c) => c.name))].reduce((acc, card) => {
-    if (cards.filter((c) => c.name === card).length > 1) {
+  return [...new Set(cards.map((c) => c.value))].reduce((acc, card) => {
+    if (cards.filter((c) => c.value === card).length > 1) {
       acc.push({
         type: 'pair',
-        name: card,
+        value: card,
       });
     }
 
@@ -79,8 +79,8 @@ const identifyPairs = (cards) => {
 };
 
 const identifyPairsAll = (cards) => {
-  return [...new Set(cards.map((c) => c.name))].reduce((acc, cur) => {
-    const values = cards.filter((c) => c.name === cur);
+  return [...new Set(cards.map((c) => c.value))].reduce((acc, cur) => {
+    const values = cards.filter((c) => c.value === cur);
 
     const sets = values.reduce((all, p, i) => {
       values.forEach((p2, i2) => {
@@ -95,7 +95,7 @@ const identifyPairsAll = (cards) => {
     if (sets.length > 0) {
       acc.push({
         type: 'pair',
-        name: cur,
+        value: cur,
         sets,
       });
     }
@@ -105,11 +105,11 @@ const identifyPairsAll = (cards) => {
 };
 
 const identifyTriples = (cards) => {
-  return [...new Set(cards.map((c) => c.name))].reduce((acc, card) => {
-    if (cards.filter((c) => c.name === card).length > 2) {
+  return [...new Set(cards.map((c) => c.value))].reduce((acc, card) => {
+    if (cards.filter((c) => c.value === card).length > 2) {
       acc.push({
         type: 'triple',
-        name: card,
+        value: card,
       });
     }
 
@@ -118,8 +118,8 @@ const identifyTriples = (cards) => {
 };
 
 const identifyTriplesAll = (cards) => {
-  return [...new Set(cards.map((c) => c.name))].reduce((acc, cur) => {
-    const values = cards.filter((c) => c.name === cur);
+  return [...new Set(cards.map((c) => c.value))].reduce((acc, cur) => {
+    const values = cards.filter((c) => c.value === cur);
 
     const sets = values.reduce((all, p, i) => {
       values.forEach((p2, i2) => {
@@ -136,7 +136,7 @@ const identifyTriplesAll = (cards) => {
     if (sets.length > 0) {
       acc.push({
         type: 'triple',
-        name: cur,
+        value: cur,
         sets,
       });
     }
@@ -146,11 +146,11 @@ const identifyTriplesAll = (cards) => {
 };
 
 const identifyQuads = (cards) => {
-  return [...new Set(cards.map((c) => c.name))].reduce((acc, card) => {
-    if (cards.filter((c) => c.name === card).length > 3) {
+  return [...new Set(cards.map((c) => c.value))].reduce((acc, value) => {
+    if (cards.filter((c) => c.value === value).length > 3) {
       acc.push({
         type: 'quad',
-        name: card,
+        value,
       });
     }
 
@@ -187,13 +187,46 @@ const identifyStraights = (cards, straightLength) => {
   }, []);
 };
 
-const identifyBombs = (cards) => {
-	return identifyPairs(cards);
-};
+const identifyBombs = (cards, straightLength, setLength = 2) => {
+  let cardSet = [];
+  switch (setLength) {
+    case 2:
+      cardSet = identifyPairs(cards);
+    case 3:
+      cardSet = identifyTriples(cards);
+    case 4:
+      cardSet = identifyQuads(cards);
+  }
 
-const createStraight = (set) => {
-	
-}
+  return cardSet
+    .reduce((acc, cur, i, arr) => {
+      arr
+        .filter((c) => c.value > cur.value)
+        .reduce(
+          (acc2, cur2, i2, arr2) => {
+            if (
+              cur2.value != 15 && // exclude 2
+              (cur2.value === arr2[i2].value || i2 === arr2.length - 1) && // next card is one higher in value by 1, or is last card
+              acc2[acc2.length - 1].value === cur2.value - 1 // previous card is one lower
+            ) {
+              acc2 = [...acc2, cur2];
+              if (
+                (straightLength && acc2.length === straightLength) ||
+                (!straightLength && acc2.length > 2)
+              ) {
+                acc.push(acc2);
+              }
+            }
+
+            return acc2;
+          },
+          [cur],
+        );
+
+      return acc;
+    }, [])
+    .map((a) => a.map((b) => b.value));
+};
 
 const playRound = (turn) => {
   let roundTurn = turn;
@@ -223,6 +256,6 @@ export {
   identifyTriples,
   identifyTriplesAll,
   identifyQuads,
-	identifyStraights,
-	identifyBombs
+  identifyStraights,
+  identifyBombs,
 };
