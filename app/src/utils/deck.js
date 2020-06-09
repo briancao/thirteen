@@ -1,4 +1,4 @@
-const suits = ['spade', 'clover', 'diamond', 'heart'];
+const suits = ['spade', 'club', 'diamond', 'heart'];
 const names = [
   { name: 'two', value: 2 },
   { name: 'three', value: 3 },
