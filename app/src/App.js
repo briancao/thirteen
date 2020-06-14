@@ -6,9 +6,11 @@ import rootReducer from './redux/rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import Socket from './components/socket';
+import Socket from './components/Socket';
 import './App.css';
-import CardFace from './components/cardFace';
+import Card from './components/Card';
+import CardHand from './components/CardHand';
+import * as deckHelper from './utils/deck';
 
 const middleware = [logger, thunk];
 
@@ -19,26 +21,22 @@ const store = createStore(
 );
 
 function App() {
+  let deck = deckHelper.sortCards(
+    deckHelper.createShuffledDeck(1, false, true).filter((a) => a.suit === 'club'),
+  );
+
   return (
     <Provider store={store}>
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <CardFace />
 
-          <Socket />
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
+
+        <CardHand cards={deck} />
       </div>
     </Provider>
   );

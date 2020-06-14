@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:4000";
 
 function Socket({ testProperty, toggleTest, getMovies }) {
     const [response, setResponse] = useState("");
@@ -9,7 +8,7 @@ function Socket({ testProperty, toggleTest, getMovies }) {
     const [socket, setSocket] = useState();
 
     useEffect(() => {
-        const socket = socketIOClient(ENDPOINT);
+        const socket = socketIOClient(process.env.END_POINT);
 
         socket.on("chat", (data) => {
             setResponse(data);
@@ -21,7 +20,7 @@ function Socket({ testProperty, toggleTest, getMovies }) {
     async function login() {
         try {
             const res = await fetch(
-                "http://localhost:4000/api/user/login",
+                `${process.env.END_POINT}/api/user/login`,
                 {
                     method: "POST",
                     credentials: "include",

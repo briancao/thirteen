@@ -62,8 +62,26 @@ const shuffleDeck = (deck) => {
   }, []);
 };
 
+const sortCards = (cards) => {
+  return cards.sort((c1, c2) => {
+    if (c1.value < c2.value) {
+      return -1;
+    }
+    if (c1.value > c2.value) {
+      return 1;
+    }
+    if (c1.suitValue < c2.suitValue) {
+      return -1;
+    }
+    if (c1.suitValue > c2.suitValue) {
+      return 1;
+    }
+    return 0;
+  });
+};
+
 const createShuffledDeck = (quantity = 1, acelow = false, twohigh = false) => {
   return shuffleDeck(createDeck(quantity, acelow, twohigh));
 };
 
-export { createDeck, shuffleDeck, createShuffledDeck, dealCard };
+export { createDeck, shuffleDeck, createShuffledDeck, dealCard, sortCards };
