@@ -1,3 +1,5 @@
+const deck = require("./utils/deck");
+const thirteen = require("./utils/thirteen");
 const express = require("express");
 const socket = require("socket.io");
 const dotenv = require("dotenv");

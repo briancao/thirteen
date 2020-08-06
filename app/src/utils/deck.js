@@ -23,7 +23,7 @@ const createDeck = (quantity = 1, acelow = false, twohigh = false) => {
         if (acelow && cv.name === 'ace') {
           return { ...cv, suit: s, suitValue: i, value: 1 };
         } else if (twohigh && cv.name === 'two') {
-          return { ...cv, suit: s, suitValue: i, value: 15};
+          return { ...cv, suit: s, suitValue: i, value: 15 };
         } else {
           return { ...cv, suit: s, suitValue: i };
         }
@@ -50,6 +50,14 @@ const dealCard = (deck) => {
   let card = deck[i];
   deck.splice(i, 1);
   return card;
+};
+
+const removeCard = (card, deck) => {
+  return deck.filter((a) => (a.value === card.value && a.suit === card.suit ? false : true));
+};
+
+const hasCard = (card, deck) => {
+  return deck.some((a) => a.value === card.value && a.suit === card.suit);
 };
 
 const shuffleDeck = (deck) => {
@@ -84,4 +92,4 @@ const createShuffledDeck = (quantity = 1, acelow = false, twohigh = false) => {
   return shuffleDeck(createDeck(quantity, acelow, twohigh));
 };
 
-export { createDeck, shuffleDeck, createShuffledDeck, dealCard, sortCards };
+export { createDeck, shuffleDeck, createShuffledDeck, dealCard, sortCards, removeCard, hasCard };

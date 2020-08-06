@@ -1,0 +1,14 @@
+.container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 75%;
+  transform: translateX(-40%);
+  left: 50%;
+  top: 30%;
+}
+
+.card {
+  width: 3rem;
+}

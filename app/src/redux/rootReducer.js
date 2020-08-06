@@ -1,10 +1,8 @@
-import { combineReducers } from "redux";
-import testReducer from "./reducer";
-import testReducer2 from "./reducer2";
+import { combineReducers } from 'redux';
+import playerHand from './playerHand/reducer';
 
 const rootReducer = combineReducers({
-    testReducer,
-    testReducer2
+  playerHand,
 });
 
 export default rootReducer;
