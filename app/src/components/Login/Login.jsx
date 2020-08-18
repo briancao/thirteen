@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 function Login() {
   async function login() {
     try {
-      const res = await fetch(`${process.env.END_POINT}/api/user/login`, {
+      const res = await fetch(`${process.env.REACT_APP_API_CONNECTION}/api/user/login`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -15,9 +15,8 @@ function Login() {
         }),
       });
       const { token } = await res.json();
-      console.log(token);
 
-      document.cookie = `accessToken=${token}`;
+      document.cookie = `thirteen-profile=${token}`;
       window.sessionStorage.accessToken = token;
     } catch (e) {
       console.log('ERROR!!!!!!!!!!');
@@ -36,4 +35,4 @@ function Login() {
   );
 }
 
-export default Socket;
+export default Login;

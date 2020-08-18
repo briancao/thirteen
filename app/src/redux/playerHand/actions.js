@@ -1,21 +1,39 @@
-import { removeCard } from '../../utils/deck';
+import { removeCard, sortCards } from '../../utils/deck';
 
 export function updateCards(cards) {
   return { type: 'UPDATE_CARDS', data: cards };
 }
 
-export function updateSet(cards) {
-  return { type: 'UPDATE_SET', data: cards };
+export function updateOpponent(count) {
+  return { type: 'UPDATE_OPPONENT_HAND', data: count };
 }
 
-export function addSet(card) {
+export function updateActiveHand(cards) {
+  return (dispatch) => dispatch({ type: 'UPDATE_ACTIVE_HAND', data: sortCards(cards) });
+}
+
+export function addActiveHand(card) {
   return (dispatch, getState) => {
-    return dispatch({ type: 'UPDATE_SET', data: [...getState().playerHand.set, card] });
+    const activeHand = sortCards([...getState().playerHand.activeHand.cards, card]);
+
+    dispatch({ type: 'WS_UPDATE_ACTIVE_HAND', data: activeHand.length });
+
+    return dispatch({
+      type: 'UPDATE_ACTIVE_HAND',
+      data: { cards: activeHand, isValid: false },
+    });
   };
 }
 
-export function removeSet(card) {
+export function removeActiveHand(card) {
   return (dispatch, getState) => {
-    return dispatch({ type: 'UPDATE_SET', data: removeCard(card, getState().playerHand.set) });
+    const activeHand = removeCard(card, getState().playerHand.activeHand.cards);
+
+    dispatch({ type: 'WS_UPDATE_ACTIVE_HAND', data: activeHand.length });
+
+    return dispatch({
+      type: 'UPDATE_ACTIVE_HAND',
+      data: { cards: activeHand, isValid: false },
+    });
   };
 }

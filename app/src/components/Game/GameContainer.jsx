@@ -1,31 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import CardHand from './CardHand';
-import CardSet from './CardSet';
-import styles from './GameContainer.module.css';
-import socketIOClient from 'socket.io-client';
 import { bindActionCreators } from 'redux';
-import { wsConnect, wsDisconnect } from '../redux/socket/actions';
+import { wsConnect, wsDisconnect } from '../../redux/socket/actions';
+import CardHand from './CardHand';
+import ActiveHand from './ActiveHand';
+import styles from './GameContainer.module.css';
 
 const GameContainer = ({ cards, set, wsConnect, wsDisconnect }) => {
   const [response, setResponse] = useState('');
   const [socket, setSocket] = useState();
 
   useEffect(() => {
+    console.log('connect');
     wsConnect(process.env.REACT_APP_SOCKET_CONNECTION);
-
-    // const socket = socketIOClient(process.env.REACT_APP_SOCKET_CONNECTION);
-
-    // socket.on('chat', (data) => {
-    //   setResponse(data);
-    // });
-
-    // setSocket(socket);
   }, []);
 
   return (
     <div className={styles.container}>
-      <CardSet cards={set} />
+      <ActiveHand cards={set} />
       <CardHand cards={cards} />
     </div>
   );

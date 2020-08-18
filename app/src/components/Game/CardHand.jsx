@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styles from './CardHand.module.css';
 import Card from './Card';
-import { addSet } from '../redux/playerHand/actions';
+import { addActiveHand } from '../../redux/playerHand/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { hasCard } from '../utils/deck';
+import { hasCard } from '../../utils/deck';
 
-const CardHand = ({ cards, set, addSet }) => {
+const CardHand = ({ cards, set, addActiveHand }) => {
   const [center, setCenter] = useState(0);
   const [handStyle, setHandStyle] = useState({});
 
@@ -19,7 +19,7 @@ const CardHand = ({ cards, set, addSet }) => {
   }, [cards]);
 
   function selectCard(card) {
-    addSet(card);
+    addActiveHand(card);
   }
 
   return (
@@ -58,6 +58,6 @@ const CardHand = ({ cards, set, addSet }) => {
 };
 
 export default connect(
-  (state) => ({ cards: state.playerHand.cards, set: state.playerHand.set }),
-  (dispatch) => bindActionCreators({ addSet }, dispatch),
+  (state) => ({ cards: state.playerHand.cards, set: state.playerHand.activeHand.cards }),
+  (dispatch) => bindActionCreators({ addActiveHand }, dispatch),
 )(CardHand);
