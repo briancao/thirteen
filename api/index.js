@@ -26,11 +26,12 @@ app.use(
   cors({
     origin: 'http://localhost:3000',
     credentials: true,
+    exposedHeaders: 'auth-token'
   }),
 );
 
 //Router Middlewares
-//app.use('/api/user', authRoute);
+app.use('/api/user', authRoute);
 app.use('/api/post', postRoute);
 
 app.listen(process.env.API_PORT, () => {
@@ -39,7 +40,6 @@ app.listen(process.env.API_PORT, () => {
 
 server.listen(Number(process.env.API_PORT) + 1, () => {
   console.log(`Socker listening on port ${Number(process.env.API_PORT) + 1}!`);
-  //console.log(`Api and socker whitelisted for ${hosts}`);
 });
 
 

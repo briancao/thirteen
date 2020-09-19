@@ -1,5 +1,5 @@
 import socketIO from 'socket.io';
-import jwt from 'jsonwebtoken';
+import { verifySocket } from '../utils/auth';
 import * as thirteenHelper from '../utils/thirteen';
 
 const initPlayers = [
@@ -18,7 +18,7 @@ export const gameRooms = (server) => {
   const gameRoom = io.of('/game-room');
 
   //listen for connection event
-  gameRoom.on('connection', function (socket) {
+  gameRoom.use(verifySocket).on('connection', function (socket) {
     //console.log("Socket Connection Made:", socket);
     console.log('Socket Connection Made', socket.id);
 

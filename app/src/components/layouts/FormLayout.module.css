@@ -1,0 +1,150 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form fieldset {
+  border: 0px;
+  padding: 0px;
+}
+
+.form label {
+  display: block;
+  min-width: 120px;
+}
+
+.row {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+
+.row.block {
+  display: block;
+  width: 280px;
+}
+
+.row.block input {
+  width: 100%;
+}
+
+.row.formMessage {
+  display: flex;
+  padding: 4px 8px;
+  font-size: var(--font-size-small);
+  line-height: 1.8;
+  border-radius: 4px;
+  outline: none;
+  resize: none;
+  flex: 1;
+  animation: shake 0.5s ease-in-out 0s 1;
+}
+
+.row.formMessage.error {
+  background-color: var(--red300);
+}
+
+.row.formMessage.success {
+  background-color: var(--green200);
+}
+
+.row.formMessage .dismissColumn {
+  width: 30px;
+  margin-left: auto;
+}
+
+.row.formMessage .dismissButton {
+  display: block;
+  width: 25px;
+  justify-content: center;
+  align-items: center;
+  background: inherit;
+  border-radius: 4px;
+  padding-top: 4px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  margin-left: auto;
+}
+
+.buttons {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+  line-height: 1.8;
+  padding-top: 10px;
+}
+
+.buttons.block {
+  width: 280px;
+}
+
+.buttons button,
+a {
+  margin: 0px 5px;
+}
+
+.fieldError {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 100%;
+  bottom: 0;
+  transform: translateX(-100%) translateX(-5px);
+  white-space: nowrap;
+}
+
+.row.block .fieldError {
+  transform: translateX(-100%) translateX(-5px) translateY(13px);
+}
+
+.row.block .fieldError div {
+  animation: slideInFromBelow 0.3s ease-in-out 0s 1;
+}
+
+
+
+@keyframes slideInFromBelow {
+  0% {
+    transform: translateX(50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0% {
+    opacity: 0.6;
+  }
+  20% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  40% {
+    transform: translate3d(4px, 0, 0);
+  }
+
+  60% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+  }
+}

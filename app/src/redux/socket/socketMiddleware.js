@@ -35,7 +35,11 @@ const socketMiddleware = () => {
         }
 
         // connect to the remote host
-        socket = socketIOClient(`${host}/game-room`, { path: '/game-room', query: { token } });
+        socket = socketIOClient(`${host}/game-room`, {
+          path: '/game-room',
+          query: { token },
+          reconnectionAttempts: 5,
+        });
 
         // default websocket handlers
         socket.on('connect', onOpen(store));
@@ -44,6 +48,14 @@ const socketMiddleware = () => {
         // custom websocket handlers
         socket.on('UPDATE_OPPONENT_HAND', (data) => {
           store.dispatch(playerHand.updateOpponent(data.data));
+        });
+
+        socket.on('TEST', () => {
+          console.log("TEST TEST TEST");
+        });
+
+        socket.on('INVALID_TOKEN', () => {
+          window.location.href = '/';
         });
 
         break;

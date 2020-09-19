@@ -1,0 +1,39 @@
+.icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.icon + * {
+  margin-left: 10px;
+}
+
+.icon svg {
+  fill: currentColor;
+}
+
+.xlarge > svg {
+  width: 128px;
+  height: 128px;
+}
+
+.large > svg {
+  width: 96px;
+  height: 96px;
+}
+
+.medium > svg {
+  width: 48px;
+  height: 48px;
+}
+
+.small > svg {
+  width: 36px;
+  height: 36px;
+}
+
+.xsmall > svg {
+  width: 24px;
+  height: 24px;
+}
