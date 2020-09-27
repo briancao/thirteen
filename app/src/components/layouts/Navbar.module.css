@@ -1,7 +1,7 @@
 .nav {
   position: absolute;
   left: 0;
-  width: 80px;
+  width: 90px;
   height: 100%;
   vertical-align: middle;
   display: flex;
@@ -12,7 +12,7 @@
 .navBackground {
   position: absolute;
   left: 0;
-  width: 80px;
+  width: 90px;
   background: var(--gray500);
   height: 100%;
   opacity: 20%;
@@ -24,49 +24,75 @@
 
 .navContainer {
   vertical-align: middle;
-  background: var(--gray800);
-  padding: 0px 10px;
+  background: var(--gray900);
+  padding: 10px 10px;
   border-radius: 40px;
   margin: 5px 5px;
   z-index: 110;
 }
 
-.navItem {
-  margin: 10px 0px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+.navButtonContainer a {
+  margin: 0px;
 }
 
-.navItem:hover .navItemOutline {
-  background: var(--active);
+.navButtonContainer:first-child {
+  margin-top: 0x;
 }
 
-.navItem:hover svg {
-  fill: var(--gray800);
+.navButtonContainer {
+  margin-bottom: 8px;
+}
+
+.navButtonContainer:last-child {
+  margin-bottom: 0px;
 }
 
 .navLabel {
-  padding-top: 5px;
-  color: white;
+  color: var(--gray50);
+  font-weight: bold;
   font-size: var(--font-size-xsmall);
   margin-left: 0px;
   text-align: center;
 }
 
-.navItemOutline {
+.navButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-normal);
+  background: var(--gray700);
   height: 60px;
   width: 60px;
-  background: var(--gray700);
-  color: white;
+  padding: 8px 8px;
   border-radius: 50%;
-  position: absolute;
-  margin-right: -50%;
-  transform: translate(-4.5px, -12px);
-  z-index: 120;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
 }
 
-.navItem svg {
-  fill: var(--gray200);
+.navButton svg {
+  fill: var(--gray200) !important;
   z-index: 130;
   width: 100%;
+}
+
+.selected .navButton {
+  background: var(--active);
+}
+
+.selected svg {
+  fill: var(--gray900) !important;
+  background: var(--active) !important;
+}
+
+.navButton:active {
+  background-color: var(--gray900);
+  color: var(--active);
+}
+
+.navButton:active svg {
+  fill: var(--active) !important;
+  background: var(--gray900) !important;
 }

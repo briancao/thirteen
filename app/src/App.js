@@ -6,13 +6,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import './App.css';
-import GameContainer from './components/game/GameContainer';
+import Home from './pages/Home';
+import Ladder from './pages/Ladder';
 import Login from './pages/Login';
+import Play from './pages/Play';
+import Profile from './pages/Profile';
 import Register from './pages/Register';
+import Settings from './pages/Settings';
 import rootReducer from './redux/rootReducer';
 import socketMiddleware from './redux/socket/socketMiddleware';
 import * as deckHelper from './utils/deck';
-import Home from './pages/Home';
 
 const middleware = [logger, socketMiddleware, thunk];
 
@@ -50,10 +53,13 @@ function App() {
           rel="stylesheet"
         />
         <Router>
-          <Route exact path="/" component={Home} />
+          <Route exact path={["/", "/home"]} component={Home} />
+          <Route exact path="/play" component={Play} />
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/ladder" component={Ladder} />
+          <Route exact path="/settings" component={Settings} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/game" component={GameContainer} />
         </Router>
       </div>
     </Provider>

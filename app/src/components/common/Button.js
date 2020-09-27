@@ -7,6 +7,7 @@ export default function Button({
   type = 'button',
   icon,
   size,
+  iconSize,
   variant,
   children,
   className,
@@ -16,7 +17,6 @@ export default function Button({
 }) {
   return (
     <button
-      data-effect="solid"
       type={type}
       className={classNames(styles.button, className, {
         [styles.large]: size === 'large',
@@ -27,7 +27,7 @@ export default function Button({
       })}
       {...props}
     >
-      {icon && <Icon icon={icon} size={size} />}
+      {icon && <Icon className={styles.icon} icon={icon} size={iconSize} />}
       {children}
     </button>
   );

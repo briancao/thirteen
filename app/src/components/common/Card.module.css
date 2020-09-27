@@ -1,4 +1,22 @@
 .card {
-  border: 1px solid #2b3137;
   border-radius: 5px;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0px;
+}
+
+.label {
+  font-size: var(--font-size-normal);
+  color: var(--gray400);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.body {
+  border: none;
+  background: var(--gray900);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--gray800);
 }

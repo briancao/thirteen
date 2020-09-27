@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './Navbar.module.css';
 import Icon from './../common/Icon';
+import { NavLink  } from 'react-router-dom';
 
 export default function Navbar({ className, children }) {
   return (
@@ -16,13 +17,15 @@ export function NavContainer({ className, children }) {
   return <div className={classNames(styles.navContainer, className)}>{children}</div>;
 }
 
-export function NavItem({ className, children, label, icon, size = 'small' }) {
+export function NavButton({ className, label, icon, to, isActive, type = 'button', size = 'small' }) {
   return (
-    <div className={classNames(styles.navItem, className)}>
-      <div className={styles.navItemOutline} />
-      {icon && <Icon icon={icon} size={size} />}
-      {label && <div className={styles.navLabel}>{label}</div>}
-      {children}
+    <div className={styles.navButtonContainer}>
+      <NavLink  to={to} activeClassName={styles.selected} isActive={isActive}>
+        <button type={type} className={classNames(styles.navButton, className)}>
+          {icon && <Icon icon={icon} size={size} />}
+        </button>
+        {label && <div className={styles.navLabel}>{label}</div>}
+      </NavLink >
     </div>
   );
 }

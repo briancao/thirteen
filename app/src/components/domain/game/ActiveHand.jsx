@@ -3,7 +3,7 @@ import styles from './ActiveHand.module.css';
 import Card from './Card';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { removeActiveHand } from '../../redux/playerHand/actions';
+import { removeActiveHand } from '../../../redux/playerHand/actions';
 
 const ActiveHand = ({ cards, opponentCards, removeActiveHand }) => {
   let cardPosition = {

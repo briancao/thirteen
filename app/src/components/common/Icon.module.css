@@ -14,13 +14,13 @@
 }
 
 .xlarge > svg {
-  width: 128px;
-  height: 128px;
+  width: 96px;
+  height: 96px;
 }
 
 .large > svg {
-  width: 96px;
-  height: 96px;
+  width: 64px;
+  height: 64px;
 }
 
 .medium > svg {
