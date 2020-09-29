@@ -1,3 +1,26 @@
 .container {
   vertical-align: middle;
 }
+
+.game-mode-container {
+  height: 250px;
+  margin: 50px 0px;
+  width: 350px;
+}
+
+.game-mode-container * {
+  text-align: center;
+}
+
+.game-mode-icon {
+  text-align: center;
+}
+
+.game-mode-label {
+  text-align: center;
+  font-style: italic;
+}
+
+.game-mode-description {
+  text-align: center;
+}

@@ -4,12 +4,10 @@ import Page from '../components/layouts/Page';
 import Icon from './../components/common/Icon';
 import RegisterForm from './../components/forms/RegisterForm';
 import styles from './Register.module.css';
-import MenuBar from '../components/common/MenuBar';
 
 export default function () {
   return (
     <Page>
-      <MenuBar />
       <div className={styles.container}>
         <div className="row">
           <div className="col">

@@ -5,4 +5,5 @@
   overflow: hidden;
   position: relative;
   padding-left: 100px !important;  
+  display: flex;
 }

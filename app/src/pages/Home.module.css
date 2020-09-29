@@ -1,0 +1,40 @@
+.container {
+  margin: 25px 0px;
+}
+
+.h1 {
+  font-size: 64px;
+  margin: 10px 0px;
+  color: white;
+}
+
+.icon {
+  transform: translateY(-8px);
+}
+
+.icon svg {
+  height: 80px;
+  width: 80px;
+}
+
+.button {
+  border-radius: 25px !important;
+  background-color: var(--active) !important;
+  color: var(--gray900) !important;
+  font-weight: 700;
+  padding-right: 20px;
+}
+
+.button svg {
+  padding-right: 5px;
+  fill: var(--gray900) !important;
+}
+
+.button:active {
+  background-color: var(--gray900) !important;
+  color: var(--active) !important;
+}
+
+.button:active svg {
+  fill: var(--active) !important;
+}

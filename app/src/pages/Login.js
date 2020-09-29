@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactComponent as Logo } from '../assets/logo.svg';
-import MenuBar from '../components/common/MenuBar';
 import Page from '../components/layouts/Page';
 import Icon from './../components/common/Icon';
 import LoginForm from './../components/forms/LoginForm';
@@ -9,7 +8,6 @@ import styles from './Login.module.css';
 export default function () {
   return (
     <Page>
-      <MenuBar />
       <div className={styles.container}>
         <div className="row">
           <div className="col">
