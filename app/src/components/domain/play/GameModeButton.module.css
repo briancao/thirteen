@@ -1,0 +1,21 @@
+.container {
+  height: 250px;
+  margin: 50px 0px;
+}
+
+.container * {
+  text-align: center;
+}
+
+.icon {
+  text-align: center;
+}
+
+.label {
+  text-align: center;
+  font-style: italic;
+}
+
+.description {
+  text-align: center;
+}

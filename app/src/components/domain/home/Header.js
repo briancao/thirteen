@@ -1,9 +1,9 @@
+import classNames from 'classnames';
 import React from 'react';
 import { ReactComponent as Logo } from '../../../assets/logo.svg';
 import Icon from '../../common/Icon';
 import styles from './Header.module.css';
 import PlayButton from './PlayButton';
-import classNames from 'classnames';
 
 export default function Header() {
   return (

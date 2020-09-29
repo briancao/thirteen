@@ -12,7 +12,6 @@ code {
     monospace;
 }
 
-
 input[type='text'],
 input[type='email'],
 input[type='password'],
@@ -25,4 +24,8 @@ textarea {
   outline: none;
   resize: none;
   flex: 1;
+}
+
+.fill-height {
+  height: 100%;
 }

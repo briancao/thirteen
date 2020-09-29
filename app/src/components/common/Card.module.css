@@ -16,7 +16,7 @@
 .body {
   border: none;
   background: var(--gray900);
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
   border: 1px solid var(--gray800);
 }
