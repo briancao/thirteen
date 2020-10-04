@@ -1,9 +1,9 @@
 import React from 'react';
-import { ReactComponent as Logo } from '../assets/logo.svg';
-import Page from '../components/layouts/Page';
-import Icon from './../components/common/Icon';
-import RegisterForm from './../components/forms/RegisterForm';
-import styles from './Register.module.css';
+import Icon from './../common/Icon';
+import LoginForm from '../forms/LoginForm';
+import Page from '../layouts/Page';
+import { ReactComponent as Logo } from '../../assets/logo.svg';
+import styles from './Login.module.css';
 
 export default function () {
   return (
@@ -16,7 +16,7 @@ export default function () {
                 thirteen <Icon icon={<Logo />} size="medium" />
               </h1>
             </div>
-            <RegisterForm className={styles.formContainer} />
+            <LoginForm className={styles.formContainer} />
           </div>
         </div>
       </div>

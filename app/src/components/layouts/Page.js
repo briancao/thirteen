@@ -5,7 +5,7 @@ import MenuBar from './../common/MenuBar';
 
 export default function Page({ children }) {
   return (
-    <div className={classNames(styles.page, 'container-fluid')}>
+    <div className={classNames(styles.page, 'container')}>
       <MenuBar />
       {children}
     </div>

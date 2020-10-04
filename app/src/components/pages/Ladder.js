@@ -1,5 +1,5 @@
 import React from 'react';
-import Page from './../components/layouts/Page';
+import Page from './../layouts/Page';
 
 export default function Ladder() {
   return (

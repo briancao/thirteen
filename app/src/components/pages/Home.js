@@ -1,15 +1,14 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Logo } from '../assets/logo.svg';
-import { ReactComponent as Play } from '../assets/video-play.svg';
-import MenuBar from '../components/common/MenuBar';
-import Button from './../components/common/Button';
-import Card from './../components/common/Card';
-import Icon from './../components/common/Icon';
-import Page from './../components/layouts/Page';
-import TopPerformance from './../components/metrics/TopPerformance';
+import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { ReactComponent as Play } from '../../assets/video-play.svg';
+import Card from './../common/Card';
+import Icon from './../common/Icon';
+import Page from './../layouts/Page';
 import styles from './Home.module.css';
+import TopPerformance from './../metrics/TopPerformance';
+import Button from './../common/Button';
 
 export default function Home() {
   var data = [
@@ -27,27 +26,6 @@ export default function Home() {
         <div className="col">
           <div className="row">
             <Header />
-          </div>
-          <div className="row">
-            <div className="col-8">
-              <Card label="RECENT MATCHES">
-                <TopPerformance data={data} />
-              </Card>
-            </div>
-            <div className="col-4">
-              <Card label="ONGOING MATCHES" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-4">
-              <Card label="CURRENT SEASON RANK" />
-            </div>
-            <div className="col-4">
-              <Card label="PERFORMANCE OVERVIEW" />
-            </div>
-            <div className="col-4">
-              <Card label="TOP PERFORMANCE" />
-            </div>
           </div>
         </div>
       </div>
