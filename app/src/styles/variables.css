@@ -28,7 +28,7 @@
   --grid-size-large: 992px;
   --grid-size-xlarge: 1140px;
 
-  --red300: #fa867e ;
+  --red300: #fa867e;
   --red400: #e34850;
   --red500: #d7373f;
   --red600: #c9252d;
@@ -45,9 +45,11 @@
   --pallete3: #7045af;
   --pallete4: #e14594;
 
-  --active: #D1E0EF;
+  --active: #d1e0ef;
 
   --form-width: 400px;
   --form-width-block: 280px;
-  
+
+  --base-height: 732px;
+  --base-width: 412px;
 }

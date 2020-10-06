@@ -1,0 +1,20 @@
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.screen {
+  background-color: #ececec;
+  height: 732px;
+  height: var(--base-height);
+  overflow: hidden;
+  position: relative;
+  width: 412px;
+  width: var(--base-width);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

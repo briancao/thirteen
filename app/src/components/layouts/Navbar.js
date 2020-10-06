@@ -1,31 +1,37 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { ReactComponent as Back } from '../../assets/back-arrow.svg';
+import { ReactComponent as Home } from '../../assets/home.svg';
+import Button from './../common/Button';
 import styles from './Navbar.module.css';
-import Icon from './../common/Icon';
-import { NavLink  } from 'react-router-dom';
 
-export default function Navbar({ className, children }) {
-  return (
-    <div>
-      <div className={classNames(styles.navBackground, className)} />
-      <div className={classNames(styles.nav, className)}>{children}</div>
-    </div>
-  );
+export default function Navbar({ className, children, back, home }) {
+  return <div className={classNames(styles['nav-bar'], className)}>{children}</div>;
 }
 
-export function NavContainer({ className, children }) {
-  return <div className={classNames(styles.navContainer, className)}>{children}</div>;
-}
+export function NavDefault({ className, label, showBack = true, showHome = false }) {
+  const history = useHistory();
 
-export function NavButton({ className, label, icon, to, isActive, type = 'button', size = 'small' }) {
   return (
-    <div className={styles.navButtonContainer}>
-      <NavLink  to={to} activeClassName={styles.selected} isActive={isActive}>
-        <button type={type} className={classNames(styles.navButton, className)}>
-          {icon && <Icon icon={icon} size={size} />}
-        </button>
-        {label && <div className={styles.navLabel}>{label}</div>}
-      </NavLink >
+    <div className={styles['nav-container']}>
+      {showBack && (
+        <Button
+          className={styles['nav-button']}
+          icon={<Back />}
+          iconSize="small"
+          onClick={() => history.push(history.goBack())}
+        />
+      )}
+      {label && <div className={styles.label}>{label}</div>}
+      {showHome && (
+        <Button
+          className={styles['nav-button']}
+          icon={<Home />}
+          iconSize="small"
+          onClick={() => history.push('/')}
+        />
+      )}
     </div>
   );
 }

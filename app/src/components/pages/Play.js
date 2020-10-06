@@ -5,10 +5,11 @@ import { animated, useTrail } from 'react-spring';
 import { ReactComponent as Quick } from '../../assets/flash.svg';
 import { ReactComponent as Search } from '../../assets/search.svg';
 import { ReactComponent as Star } from '../../assets/star.svg';
-import Card from './../common/Card';
-import Icon from './../common/Icon';
-import Page from './../layouts/Page';
+import Card from '../common/Card';
+import Icon from '../common/Icon';
+import Screen from './../layouts/Screen';
 import styles from './Play.module.css';
+import Navbar, { NavDefault } from './../layouts/Navbar';
 
 export default function Play() {
   const history = useHistory();
@@ -41,26 +42,20 @@ export default function Play() {
   });
 
   return (
-    <Page>
-      <div className="container-fluid fill-height">
-        <div className="row align-items-center fill-height">
-          {trail.map((props, index) => {
-            const { icon, label, description, onClick } = buttons[index];
+    <Screen>
+      <Navbar>
+        <NavDefault label="PLAY"/>
+      </Navbar>
+      {/* {trail.map((props, index) => {
+        const { icon, label, description, onClick } = buttons[index];
 
-            return (
-              <animated.div key={`button-${index}`} style={props} className="col">
-                <GameModeButton
-                  icon={icon}
-                  label={label}
-                  description={description}
-                  onClick={onClick}
-                />
-              </animated.div>
-            );
-          })}
-        </div>
-      </div>
-    </Page>
+        return (
+          <animated.div key={`button-${index}`} style={props}>
+            <GameModeButton icon={icon} label={label} description={description} onClick={onClick} />
+          </animated.div>
+        );
+      })} */}
+    </Screen>
   );
 }
 
@@ -74,9 +69,7 @@ export function GameModeButton({
   },
 }) {
   return (
-    <div
-      onClick={onClick}
-    >
+    <div onClick={onClick}>
       <Card className={styles['game-mode-container']}>
         <div className={classNames(className, styles['game-mode-container'])}>
           <div className={styles['game-mode-icon']}>

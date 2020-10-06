@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './GameBrowser.module.css';
 import classNames from 'classnames';
-import Table from '../../common/Table';
+import Table from '../common/Table';
 
 export default function GameBrowser() {
   const columns = [
