@@ -32,7 +32,7 @@
 .buttons .button {
   border-radius: 30px !important;
   background-color: var(--active) !important;
-  color: var(--gray900) !important;
+  color: var(--gray50) !important;
   font-weight: 700;
   padding-right: 20px;
   height: 60px;
@@ -41,7 +41,7 @@
 }
 
 .buttons .button svg {
-  fill: var(--gray900) !important;
+  fill: var(--gray50) !important;
   transform: translateX(-10px);
 }
 

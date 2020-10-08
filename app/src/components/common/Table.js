@@ -3,13 +3,9 @@ import styles from './Table.module.css';
 import classNames from 'classnames';
 
 export default function Table({ rows, columns, empty }) {
-  if (empty && rows.length === 0) {
-    return empty;
-  }
-
   return (
     <div className={styles.table}>
-      <div className={classNames(styles.header, 'row')}>
+      <div className={classNames(styles.header)}>
         {columns.map(({ key, label, className, style, header }) => (
           <div
             key={key}
@@ -24,7 +20,7 @@ export default function Table({ rows, columns, empty }) {
         {empty && rows.length === 0 && <div className={styles['empty-message']}>{empty}</div>}
         {rows.length > 0 &&
           rows.map((row, rowIndex) => (
-            <div className={classNames(styles.row, 'row')} key={rowIndex}>
+            <div className={classNames(styles.row)} key={rowIndex}>
               {columns.map(({ key, render, className, style, cell }) => (
                 <div
                   key={`${rowIndex}${key}`}

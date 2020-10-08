@@ -1,11 +1,16 @@
 .table {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .header {
   border-bottom: 1px solid var(--gray300);
-  background-color: rgba(20, 115, 230, .5)
+  background-color: var(--active3);
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--gray50);
+  border-radius: 4px;
 }
 
 .head {
@@ -32,10 +37,17 @@
 .row {
   border-bottom: 1px solid var(--gray300);
   padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .cell {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
+.empty-message {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--gray300);
+}

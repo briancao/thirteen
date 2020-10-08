@@ -1,7 +1,28 @@
 .container {
-
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.button-row {
-  
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  width: 85%;
+}
+
+.refresh-button {
+  margin-right: 5px;
+  background-color: var(--active);
+}
+
+.create-button {
+  background-color: var(--active2);
+  width: 100%;
+}
+
+.join-button {
+  padding-right: 0px !important;
 }

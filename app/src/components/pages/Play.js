@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as Quick } from '../../assets/flash.svg';
@@ -29,9 +28,9 @@ export default function Play() {
       icon: <Search />,
       label: 'GAME BROWSER',
       description: 'FIND THAT PERFECT MATCH OR JUST CREATE ONE',
-      // onClick: () => {
-      //   history.push('/play/game-browser');
-      // },
+      onClick: () => {
+        history.push('/play/game-browser');
+      },
     },
   ];
 
@@ -41,7 +40,7 @@ export default function Play() {
         <NavDefault label="PLAY" />
       </Navbar>
 
-      <Slider data={buttons}>
+      <Slider>
         {buttons.map(({ icon, label, description, onClick }) => (
           <GameModeButton
             key={label}
@@ -56,17 +55,9 @@ export default function Play() {
   );
 }
 
-export function GameModeButton({
-  className,
-  icon,
-  label,
-  description,
-  onClick = () => {
-    console.log('test');
-  },
-}) {
+export function GameModeButton({ icon, label, description, onClick = () => {} }) {
   return (
-    <Card className={styles['game-mode-container']}>
+    <Card className={styles['game-mode-container']} onClick={onClick}>
       <div className={styles['game-mode-body']}>
         <div className={styles['game-mode-icon']}>
           <Icon icon={icon} size="xlarge" />

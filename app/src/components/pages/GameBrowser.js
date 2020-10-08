@@ -2,24 +2,49 @@ import React from 'react';
 import styles from './GameBrowser.module.css';
 import classNames from 'classnames';
 import Table from '../common/Table';
+import Screen from './../layouts/Screen';
+import Navbar, { NavDefault } from './../layouts/Navbar';
+import Button from './../common/Button';
+import { ReactComponent as Refresh } from '../../assets/refresh.svg';
+import { ReactComponent as Plus } from '../../assets/plus.svg';
 
 export default function GameBrowser() {
   const columns = [
-    { key: 'username', label: 'Username', className: 'col-6 col-md-4' },
+    { key: 'roomname', label: 'Room', className: 'col-6' },
     {
-      key: 'is_admin',
-      label: 'Administrator',
-      className: 'col-6 col-md-4',
+      key: 'players',
+      label: 'Players',
+      className: 'col-3',
     },
     {
-      className: classNames(styles.buttons, 'col-12 col-md-4 pt-2 pt-md-0'),
+      key: 'action',
+      label: '',
+      className: classNames(styles['join-button'], 'col-3'),
+      render: () => <Button className={styles['create-button']}>JOIN</Button>,
     },
   ];
 
   return (
-    <div className={styles.container}>
-      <div className={classNames(styles['button-row'], 'row')}></div>
-      <Table columns={columns} rows={[]} empty="No Rooms Available"/>
-    </div>
+    <Screen>
+      <Navbar>
+        <NavDefault label="GAME BROWSER" />
+      </Navbar>
+      <div className={styles.row}>
+        <Button icon={<Refresh />} iconSize="small" className={styles['refresh-button']} />
+        <input type="text" placeholder="Filter" maxLength="4" />
+      </div>
+      <div className={styles.row}>
+        <Button icon={<Plus />} size="large" iconSize="small" className={styles['create-button']}>
+          Create Room
+        </Button>
+      </div>
+      <div className={styles.row}>
+        <Table columns={columns} rows={[]} empty="No Rooms Available" />
+      </div>
+    </Screen>
   );
+}
+
+export function FilterInput() {
+  return <input type="text" placeholder="Filter" maxLength="4" />;
 }

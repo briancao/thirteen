@@ -9,6 +9,7 @@ import './App.css';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import GameBrowser from './components/pages/GameBrowser';
+import GameRoom from './components/pages/GameRoom';
 import Play from './components/pages/Play';
 import Profile from './components/pages/Profile';
 import Register from './components/pages/Register';
@@ -52,6 +53,7 @@ function App() {
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/play" component={Play} />
           <Route exact path="/play/game-browser" component={GameBrowser} />
+          <Route path="/play/game-room/{}" component={GameRoom} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/login" component={Login} />
