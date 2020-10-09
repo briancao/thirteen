@@ -1,19 +1,10 @@
 import socketIOClient from 'socket.io-client';
-import * as socketActions from './actions';
 import * as playerHand from '../playerHand/actions';
+import { onOpen, onClose } from './socketConfiguration';
 import Cookies from 'js-cookie';
 
 const socketMiddleware = () => {
   let socket = null;
-
-  const onOpen = (store) => (action) => {
-    // console.log('websocket open', action.target.url);
-    // store.dispatch(socketActions.wsConnected(action.target.url));
-  };
-
-  const onClose = (store) => () => {
-    store.dispatch(socketActions.wsDisconnected());
-  };
 
   // the middleware part of this function
   return (store) => (next) => (action) => {
@@ -27,7 +18,10 @@ const socketMiddleware = () => {
         socket.emit('START_GAME', action.data);
         break;
       case 'WS_CONNECT':
-        const token = Cookies.get('thirteen-profile');
+        let token = Cookies.get('thirteen-profile');
+        if (!token) {
+          token = "test";
+        }
 
         // close existing connection
         if (socket !== null) {
@@ -38,7 +32,7 @@ const socketMiddleware = () => {
         socket = socketIOClient(`${host}/game-room`, {
           path: '/game-room',
           query: { token },
-          reconnectionAttempts: 5,
+          reconnectionAttempts: 3,
         });
 
         // default websocket handlers

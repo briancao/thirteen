@@ -1,5 +1,9 @@
 import { removeCard, sortCards } from '../../utils/deck';
 
+export const UPDATE_CARDS = 'UPDATE_CARDS';
+export const UPDATE_OPPONENT_HAND = 'UPDATE_OPPONENT_HAND';
+export const UPDATE_ACTIVE_HAND = 'UPDATE_ACTIVE_HAND';
+
 export function updateCards(cards) {
   return { type: 'UPDATE_CARDS', data: cards };
 }

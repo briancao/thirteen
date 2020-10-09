@@ -7,8 +7,11 @@ import Navbar, { NavDefault } from './../layouts/Navbar';
 import Button from './../common/Button';
 import { ReactComponent as Refresh } from '../../assets/refresh.svg';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { wsConnect, wsDisconnect } from '../../redux/socket/actions';
 
-export default function GameBrowser() {
+function GameBrowser() {
   const columns = [
     { key: 'roomname', label: 'Room', className: 'col-6' },
     {
@@ -44,6 +47,10 @@ export default function GameBrowser() {
     </Screen>
   );
 }
+
+export default connect((dispatch) => bindActionCreators({ wsConnect, wsDisconnect }, dispatch))(
+  GameBrowser,
+);
 
 export function FilterInput() {
   return <input type="text" placeholder="Filter" maxLength="4" />;

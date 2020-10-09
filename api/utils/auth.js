@@ -16,8 +16,35 @@ export default function authenticate(req, res, next) {
 
 export const verifySocket = (socket, next) => {
   if (socket.handshake.query && socket.handshake.query.token) {
-    const decoded = jwt.verify(socket.handshake.query.token, process.env.TOKEN_SECRET);
-    socket.decoded = decoded;
-    next();
+    if (socket.handshake.query.token == 'test') {
+      console.log('break');
+    } else {
+      const decoded = jwt.verify(socket.handshake.query.token, process.env.TOKEN_SECRET);
+      socket.decoded = decoded;
+      next();
+    }
   }
 };
+
+export const verifyToken = token => {
+  try {
+      const decoded = jwt.verify(token, API_KEY);
+      return decoded;
+  } catch {
+      return false;
+  }
+};
+
+export function guestIdGenerator() {
+  var userName = `Guest${Math.random() * 9999}`;
+  var timestamp = ((new Date().getTime() / 1000) | 0).toString(16);
+  var objectId = 'xxxxxxxxxxxxxxxx'
+    .replace(/[x]/g, function () {
+      return ((Math.random() * 16) | 0).toString(16);
+    })
+    .toLowerCase();
+  return {
+    id: `${userName}-${timestamp}${objectId}`,
+    username: userName,
+  };
+}

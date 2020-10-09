@@ -68,12 +68,38 @@ router.post('/login', async (req, res) => {
   }
 
   //Create and assign a token
-  const token = jwt.sign({ id: 'user.id', email: 'user.email' }, process.env.TOKEN_SECRET);
+  const token = jwt.sign(
+    { id: user.id, username: user.username, guest: false },
+    process.env.TOKEN_SECRET,
+  );
   res.header('auth-token', token).sendStatus(200);
 });
 
-router.post('/reset/:paramId', async (req, res) => {
-  const id = req.params.paramId;
+router.post('/guest', async (req, res) => {
+  const guestUser = guestIdGenerator();
+
+  //Create and assign a token
+  const token = jwt.sign(
+    { id: guestUser.id, username: guestUser.username, guest: true },
+    process.env.TOKEN_SECRET,
+  );
+
+  res.header('auth-token', token).sendStatus(200);
+});
+
+router.post('/verify', async (req, res) => {
+  if (!req.body) {
+    return res.status(401).send('Unauthorized user and/or route');
+  }
+
+  const { token } = req.body;
+  const decoded = verifyToken(token);
+
+  if (!decoded) {
+    return res.status(400).send('Unauthorized action. JWT expired');
+  }
+
+  return res.json({ success: true, decoded }).sendStatus(200);
 });
 
 export default router;

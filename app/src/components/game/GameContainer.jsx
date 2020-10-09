@@ -7,9 +7,6 @@ import ActiveHand from './ActiveHand';
 import styles from './GameContainer.module.css';
 
 const GameContainer = ({ cards, set, wsConnect, wsDisconnect }) => {
-  const [response, setResponse] = useState('');
-  const [socket, setSocket] = useState();
-
   useEffect(() => {
     console.log('connect');
     wsConnect(process.env.REACT_APP_SOCKET_CONNECTION);

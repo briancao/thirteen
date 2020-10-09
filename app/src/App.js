@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
@@ -17,12 +17,19 @@ import Settings from './components/pages/Settings';
 import rootReducer from './redux/rootReducer';
 import socketMiddleware from './redux/socket/socketMiddleware';
 import * as deckHelper from './utils/deck';
+import { wsConnect, wsDisconnect } from './redux/socket/actions';
+import Socket from './components/layouts/Socket';
 
 const middleware = [logger, socketMiddleware, thunk];
 
 const store = createStore(
   rootReducer,
   {
+    user: {
+      id: '',
+      username: '',
+      guest: false,
+    },
     playerHand: {
       cards: deckHelper.sortCards(
         deckHelper
@@ -46,11 +53,20 @@ const store = createStore(
 );
 
 function App() {
+  useEffect(() => {
+    wsConnect(process.env.REACT_APP_SOCKET_CONNECTION);
+
+    return () => {
+      wsDisconnect();
+    };
+  }, []);
+
   return (
     <Provider store={store}>
       <div className="App">
+        <Socket />
         <Router>
-          <Route exact path={["/", "/home"]} component={Home} />
+          <Route exact path={['/', '/home']} component={Home} />
           <Route exact path="/play" component={Play} />
           <Route exact path="/play/game-browser" component={GameBrowser} />
           <Route path="/play/game-room/{}" component={GameRoom} />

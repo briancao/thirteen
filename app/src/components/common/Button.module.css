@@ -14,8 +14,8 @@
   color: var(--gray50);
 }
 
-.icon {
-  padding-right: 5px;
+.label {
+  padding-left: 5px;
 }
 
 .button:hover {

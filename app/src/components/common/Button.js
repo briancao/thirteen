@@ -28,7 +28,7 @@ export default function Button({
       {...props}
     >
       {icon && <Icon className={styles.icon} icon={icon} size={iconSize} />}
-      {children}
+      {children && <div className={styles.label}>{children}</div>}
     </button>
   );
 }

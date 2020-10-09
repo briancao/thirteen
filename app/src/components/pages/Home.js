@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { ReactComponent as Play } from '../../assets/video-play.svg';
+import Button from './../common/Button';
 import Icon from './../common/Icon';
 import Screen from './../layouts/Screen';
 import styles from './Home.module.css';
-import Button from './../common/Button';
-import { useHistory } from 'react-router-dom';
 
 export default function Home() {
   return (
