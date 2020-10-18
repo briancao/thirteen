@@ -1,3 +1,4 @@
+//user
 const initialState = {
   user: {
     id: '',

@@ -1,13 +1,12 @@
 import socketIO from 'socket.io';
 import { verifySocket } from '../utils/auth';
-import * as thirteenHelper from '../utils/thirteen';
-
-const initPlayers = [
-  { name: 'player 1', position: 0, user_id: null, cards: [], socketId: '' },
-  { name: 'player 2', position: 1, user_id: null, cards: [], socketId: '' },
-  { name: 'player 3', position: 2, user_id: null, cards: [], socketId: '' },
-  { name: 'player 4', position: 3, user_id: null, cards: [], socketId: '' },
-];
+import {
+  generateGameRoomName,
+  WS_CREATE_ROOM,
+  WS_JOIN_QUICK_GAME,
+  WS_JOIN_ROOM,
+  WS_LIST_ROOMS,
+} from '../utils/gameRoom';
 
 export const gameRooms = (server) => {
   const io = socketIO.listen(server, {
@@ -17,21 +16,51 @@ export const gameRooms = (server) => {
 
   const gameRoom = io.of('/game-room');
 
-  //listen for connection event
-  gameRoom.use(verifySocket).on('connection', function (socket) {
-    //console.log("Socket Connection Made:", socket);
-    console.log('Socket Connection Made', socket.id);
+  let users = [];
+  let rooms = [];
 
-    socket.on('UPDATE_ACTIVE_HAND', (data) => updateOpponentHand(data, socket));
+  //listen for connection event
+  gameRoom.use(verifySocket).on('connect', function (socket) {
+    //console.log("Socket Connection Made:", socket);
+    const { id, user } = socket;
+
+    users.push(user);
+
+    console.log('Socket Connection Made', id);
+    console.log('User:', user);
+
+    socket.on(WS_CREATE_ROOM, () => createRoom(socket, io));
+    socket.on(WS_JOIN_ROOM, (roomName) => joinRoom(roomName, socket, io));
+    socket.on(WS_JOIN_QUICK_GAME, () => joinRoom('QUICK_GAME', socket, io));
+    socket.on(WS_LIST_ROOMS, () => listRooms(socket, io));
+
+
 
     socket.on('disconnect', () => {
-      io.sockets.emit('chat', { data: `${socket.id} has left chat` });
+      users = users.filter((a) => a.id !== user.id);
+      console.log(users);
     });
   });
 };
 
-export const updateOpponentHand = (data, socket) => {
-  console.log(data);
-  // sending to all clients except sender
-  socket.broadcast.emit('UPDATE_OPPONENT_HAND', { action: 'UPDATE_OPPONENT_HAND', data });
-};
+function createRoom(socket, io) {
+  const roomName = generateGameRoomName(socket);
+
+  socket.join(roomName);
+  socket.emit(WS_CREATE_ROOM, roomName);
+
+  socket.to(roomName).emit(WS_CREATE_ROOM);
+}
+
+function joinRoom(roomName, socket, io) {
+  socket.join(roomName);
+  socket.emit(WS_JOIN_ROOM, roomName);
+
+  socket.to(roomName).emit(WS_JOIN_ROOM);
+}
+
+function listRooms(socket, io) {
+  console.log('list room')
+  console.log(io.of('/game-room').adapter.rooms);
+  console.log(socket.rooms);
+}

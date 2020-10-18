@@ -3,6 +3,7 @@ import User from '../model/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { registerValidation, loginValidation } from '../utils/validation';
+import { verifyToken, guestIdGenerator } from '../utils/auth';
 
 let router = express.Router();
 
@@ -36,8 +37,8 @@ router.post('/register', async (req, res) => {
 
   //Save
   try {
-    const savedUser = await user.save();
-    return res.send({ id: savedUser.id });
+    await user.save();
+    return res.sendStatus(200);
   } catch (err) {
     console.log('/register: Failed to create');
     return res.status(400).send(err);
@@ -72,6 +73,7 @@ router.post('/login', async (req, res) => {
     { id: user.id, username: user.username, guest: false },
     process.env.TOKEN_SECRET,
   );
+
   res.header('auth-token', token).sendStatus(200);
 });
 
@@ -79,16 +81,16 @@ router.post('/guest', async (req, res) => {
   const guestUser = guestIdGenerator();
 
   //Create and assign a token
-  const token = jwt.sign(
-    { id: guestUser.id, username: guestUser.username, guest: true },
-    process.env.TOKEN_SECRET,
-  );
+  const token = jwt.sign(guestUser, process.env.TOKEN_SECRET);
+
+  console.log(guestUser);
 
   res.header('auth-token', token).sendStatus(200);
 });
 
 router.post('/verify', async (req, res) => {
   if (!req.body) {
+    console.log('/login: Unauthorrized');
     return res.status(401).send('Unauthorized user and/or route');
   }
 
@@ -96,10 +98,11 @@ router.post('/verify', async (req, res) => {
   const decoded = verifyToken(token);
 
   if (!decoded) {
+    console.log('/login: JWT Expired');
     return res.status(400).send('Unauthorized action. JWT expired');
   }
 
-  return res.json({ success: true, decoded }).sendStatus(200);
+  return res.send({ user: decoded });
 });
 
 export default router;

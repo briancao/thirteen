@@ -9,9 +9,13 @@ import { ReactComponent as Refresh } from '../../assets/refresh.svg';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { wsConnect, wsDisconnect } from '../../redux/socket/actions';
+import { wsCreateRoom, wsListRooms } from '../../redux/socket/actions';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-function GameBrowser() {
+function GameBrowser({ wsCreateRoom, wsListRooms, roomName }) {
+  const history = useHistory();
+
   const columns = [
     { key: 'roomname', label: 'Room', className: 'col-6' },
     {
@@ -27,17 +31,33 @@ function GameBrowser() {
     },
   ];
 
+  useEffect(() => {
+    wsListRooms();
+  }, []);
+
+  useEffect(() => {
+    if (roomName) {
+      history.push('/play/game-room');
+    }
+  }, [roomName]);
+
   return (
     <Screen>
       <Navbar>
         <NavDefault label="GAME BROWSER" />
       </Navbar>
       <div className={styles.row}>
-        <Button icon={<Refresh />} iconSize="small" className={styles['refresh-button']} />
+        <Button onClick={() => wsListRooms()} icon={<Refresh />} iconSize="small" className={styles['refresh-button']} />
         <input type="text" placeholder="Filter" maxLength="4" />
       </div>
       <div className={styles.row}>
-        <Button icon={<Plus />} size="large" iconSize="small" className={styles['create-button']}>
+        <Button
+          onClick={() => wsCreateRoom()}
+          icon={<Plus />}
+          size="large"
+          iconSize="small"
+          className={styles['create-button']}
+        >
           Create Room
         </Button>
       </div>
@@ -48,10 +68,7 @@ function GameBrowser() {
   );
 }
 
-export default connect((dispatch) => bindActionCreators({ wsConnect, wsDisconnect }, dispatch))(
-  GameBrowser,
-);
-
-export function FilterInput() {
-  return <input type="text" placeholder="Filter" maxLength="4" />;
-}
+export default connect(
+  (state) => ({ roomName: state.gameRoom.roomName }),
+  (dispatch) => bindActionCreators({ wsCreateRoom, wsListRooms }, dispatch),
+)(GameBrowser);

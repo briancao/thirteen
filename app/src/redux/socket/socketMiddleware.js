@@ -1,27 +1,20 @@
-import socketIOClient from 'socket.io-client';
-import * as playerHand from '../playerHand/actions';
-import { onOpen, onClose } from './socketConfiguration';
 import Cookies from 'js-cookie';
+import socketIOClient from 'socket.io-client';
+import configureSocket from './socketConfiguration';
+import { WS_CONNECT, WS_DISCONNECT, WS_CREATE_ROOM, WS_LIST_ROOMS } from './actions';
 
 const socketMiddleware = () => {
   let socket = null;
 
   // the middleware part of this function
   return (store) => (next) => (action) => {
-    const { type, host } = action;
+    const { type } = action;
 
     switch (type) {
-      case 'WS_UPDATE_ACTIVE_HAND':
-        socket.emit('UPDATE_ACTIVE_HAND', action.data);
-        break;
-      case 'WS_START_GAME':
-        socket.emit('START_GAME', action.data);
-        break;
-      case 'WS_CONNECT':
+      case WS_CONNECT:
+        const { connection } = action;
+
         let token = Cookies.get('thirteen-profile');
-        if (!token) {
-          token = "test";
-        }
 
         // close existing connection
         if (socket !== null) {
@@ -29,36 +22,30 @@ const socketMiddleware = () => {
         }
 
         // connect to the remote host
-        socket = socketIOClient(`${host}/game-room`, {
+        socket = socketIOClient(`${connection}/game-room`, {
           path: '/game-room',
           query: { token },
           reconnectionAttempts: 3,
         });
 
-        // default websocket handlers
-        socket.on('connect', onOpen(store));
-        socket.on('close', onClose(store));
-
-        // custom websocket handlers
-        socket.on('UPDATE_OPPONENT_HAND', (data) => {
-          store.dispatch(playerHand.updateOpponent(data.data));
-        });
-
-        socket.on('TEST', () => {
-          console.log("TEST TEST TEST");
-        });
-
-        socket.on('INVALID_TOKEN', () => {
-          window.location.href = '/';
-        });
-
+        configureSocket(socket, store);
         break;
-      case 'WS_DISCONNECT':
+      case WS_DISCONNECT:
         if (socket !== null) {
           socket.close();
         }
         socket = null;
         console.log('websocket closed');
+        break;
+      case WS_CREATE_ROOM:
+        console.log('websocket: create room');
+        socket.emit(WS_CREATE_ROOM);
+        break;
+      case WS_LIST_ROOMS:
+        console.log('websocket: list rooms');
+        if (socket != null) {
+          socket.emit(WS_LIST_ROOMS);
+        }
         break;
       default:
         console.log('the next action:', action);

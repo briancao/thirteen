@@ -16,35 +16,38 @@ export default function authenticate(req, res, next) {
 
 export const verifySocket = (socket, next) => {
   if (socket.handshake.query && socket.handshake.query.token) {
-    if (socket.handshake.query.token == 'test') {
-      console.log('break');
-    } else {
-      const decoded = jwt.verify(socket.handshake.query.token, process.env.TOKEN_SECRET);
-      socket.decoded = decoded;
+    jwt.verify(socket.handshake.query.token, process.env.TOKEN_SECRET, function (err, decoded) {
+      if (err) return next(new Error('Authentication error'));
+      socket.user = decoded;
       next();
-    }
+    });
+  } else {
+    next(new Error('Authentication error'));
   }
 };
 
-export const verifyToken = token => {
+export const verifyToken = (token) => {
   try {
-      const decoded = jwt.verify(token, API_KEY);
-      return decoded;
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    return decoded;
   } catch {
-      return false;
+    return false;
   }
 };
 
 export function guestIdGenerator() {
-  var userName = `Guest${Math.random() * 9999}`;
+  var userName = `Guest${Math.round(Math.random() * 9999)}`;
   var timestamp = ((new Date().getTime() / 1000) | 0).toString(16);
   var objectId = 'xxxxxxxxxxxxxxxx'
     .replace(/[x]/g, function () {
       return ((Math.random() * 16) | 0).toString(16);
     })
     .toLowerCase();
+
+  console.log(userName);
   return {
     id: `${userName}-${timestamp}${objectId}`,
     username: userName,
+    guest: true,
   };
 }

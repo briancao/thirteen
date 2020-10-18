@@ -15,12 +15,17 @@
 
 .refresh-button {
   margin-right: 5px;
-  background-color: var(--active);
+  background-color: var(--active) !important;
 }
 
 .create-button {
-  background-color: var(--active2);
+  background-color: var(--active2) !important;
   width: 100%;
+}
+
+.refresh-button:hover, 
+.create-button:hover {
+  background: var(--gray400) !important;
 }
 
 .join-button {
