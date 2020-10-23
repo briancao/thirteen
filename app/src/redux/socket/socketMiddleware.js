@@ -1,7 +1,13 @@
 import Cookies from 'js-cookie';
 import socketIOClient from 'socket.io-client';
 import configureSocket from './socketConfiguration';
-import { WS_CONNECT, WS_DISCONNECT, WS_CREATE_ROOM, WS_LIST_ROOMS } from './actions';
+import {
+  WS_CONNECT,
+  WS_DISCONNECT,
+  WS_CREATE_ROOM,
+  WS_JOIN_ROOM,
+  WS_SEARCH_ROOMS,
+} from './actions';
 
 const socketMiddleware = () => {
   let socket = null;
@@ -27,7 +33,7 @@ const socketMiddleware = () => {
           query: { token },
           reconnectionAttempts: 3,
         });
-
+        
         configureSocket(socket, store);
         break;
       case WS_DISCONNECT:
@@ -41,10 +47,21 @@ const socketMiddleware = () => {
         console.log('websocket: create room');
         socket.emit(WS_CREATE_ROOM);
         break;
-      case WS_LIST_ROOMS:
-        console.log('websocket: list rooms');
+      case WS_JOIN_ROOM:
+        const { roomName } = action;
+
+        console.log('websocket: join room');
+
+        if (socket != null) {  
+          socket.emit(WS_JOIN_ROOM, roomName);
+        }
+        break;
+      case WS_SEARCH_ROOMS:
+        const { search } = action;
+
+        console.log('websocket: search rooms');
         if (socket != null) {
-          socket.emit(WS_LIST_ROOMS);
+          socket.emit(WS_SEARCH_ROOMS, search);
         }
         break;
       default:

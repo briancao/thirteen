@@ -1,16 +1,8 @@
 import * as actions from './actions';
 
 const initialState = {
-  rooms: [],
   roomName: null,
-  activeHand: {
-    cards: [],
-    isValid: false,
-  },
-  isValid: false,
-  cards: [],
-  gameHistory: [],
-  opponentHand: 0,
+  players: [],
 };
 
 export default function (state = initialState, action) {
@@ -18,8 +10,12 @@ export default function (state = initialState, action) {
   switch (type) {
     case actions.CREATE_ROOM:
       return { ...state, roomName: data };
-    case actions.LIST_ROOMS:
-      return { ...state, rooms: data}
+    case actions.JOIN_ROOM:
+      return { ...state, roomName: data };
+    case actions.LEAVE_ROOM:
+      return { ...state, roomName: null, players: [] };
+    case actions.UPDATE_PLAYERS:
+      return { ...state, players: data };
     default:
       return state;
   }

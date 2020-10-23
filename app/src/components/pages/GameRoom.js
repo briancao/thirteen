@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import styles from './GameRoom.module.css';
-import Screen from './../layouts/Screen';
+import { wsJoinRoom } from '../../redux/socket/actions';
 import Navbar, { NavDefault } from './../layouts/Navbar';
+import Screen from './../layouts/Screen';
+import styles from './GameRoom.module.css';
 
-function GameRoom() {
+function GameRoom({ roomName, connected, wsJoinRoom }) {
+  useEffect(() => {
+    if (connected && roomName) {
+      wsJoinRoom(roomName);
+    }
+  }, [roomName, connected]);
+
   return (
     <Screen>
       <Navbar>
@@ -17,6 +24,6 @@ function GameRoom() {
 }
 
 export default connect(
-  (state) => ({ roomName: state.gameRoom.roomName }),
-  null
+  (state) => ({ roomName: state.gameRoom.roomName, connected: state.socket.connected }),
+  (dispatch) => bindActionCreators({ wsJoinRoom }, dispatch),
 )(GameRoom);
