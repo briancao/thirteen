@@ -10,7 +10,7 @@ export default function Navbar({ className, children, back, home }) {
   return <div className={classNames(styles['nav-bar'], className)}>{children}</div>;
 }
 
-export function NavDefault({ className, label, showBack = true, showHome = false }) {
+export function NavDefault({ className, label, showBack = true, showHome = false, onClick }) {
   const history = useHistory();
 
   return (
@@ -20,7 +20,7 @@ export function NavDefault({ className, label, showBack = true, showHome = false
           className={styles['nav-button']}
           icon={<Back />}
           iconSize="small"
-          onClick={() => history.push(history.goBack())}
+          onClick={onClick ? () => onClick() : () => history.push(history.goBack())}
         />
       )}
       {label && <div className={styles.label}>{label}</div>}

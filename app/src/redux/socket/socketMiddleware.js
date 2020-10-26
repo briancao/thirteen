@@ -6,6 +6,7 @@ import {
   WS_DISCONNECT,
   WS_CREATE_ROOM,
   WS_JOIN_ROOM,
+  WS_LEAVE_ROOM,
   WS_SEARCH_ROOMS,
 } from './actions';
 
@@ -14,12 +15,10 @@ const socketMiddleware = () => {
 
   // the middleware part of this function
   return (store) => (next) => (action) => {
-    const { type } = action;
+    const { type, data } = action;
 
     switch (type) {
       case WS_CONNECT:
-        const { connection } = action;
-
         let token = Cookies.get('thirteen-profile');
 
         // close existing connection
@@ -28,12 +27,12 @@ const socketMiddleware = () => {
         }
 
         // connect to the remote host
-        socket = socketIOClient(`${connection}/game-room`, {
+        socket = socketIOClient(`${data.connection}/game-room`, {
           path: '/game-room',
           query: { token },
           reconnectionAttempts: 3,
         });
-        
+
         configureSocket(socket, store);
         break;
       case WS_DISCONNECT:
@@ -41,31 +40,24 @@ const socketMiddleware = () => {
           socket.close();
         }
         socket = null;
-        console.log('websocket closed');
         break;
       case WS_CREATE_ROOM:
-        console.log('websocket: create room');
         socket.emit(WS_CREATE_ROOM);
         break;
       case WS_JOIN_ROOM:
-        const { roomName } = action;
-
-        console.log('websocket: join room');
-
-        if (socket != null) {  
-          socket.emit(WS_JOIN_ROOM, roomName);
-        }
+        socket.emit(WS_JOIN_ROOM, data.roomName);
+        break;
+      case WS_LEAVE_ROOM:
+        socket.emit(WS_LEAVE_ROOM, data.roomName);
         break;
       case WS_SEARCH_ROOMS:
-        const { search } = action;
+        const { search } = data;
 
-        console.log('websocket: search rooms');
         if (socket != null) {
-          socket.emit(WS_SEARCH_ROOMS, search);
+          socket.emit(WS_SEARCH_ROOMS, data.search);
         }
         break;
       default:
-        console.log('the next action:', action);
         return next(action);
     }
   };

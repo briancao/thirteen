@@ -13,7 +13,7 @@ import { wsCreateRoom, wsSearchRooms, wsJoinRoom } from '../../redux/socket/acti
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-function GameBrowser({ wsCreateRoom, wsSearchRooms, wsJoinRoom, roomName, rooms }) {
+function GameBrowser({ wsCreateRoom, wsSearchRooms, wsJoinRoom, rooms }) {
   const history = useHistory();
   const [search, setSearch] = useState('');
 
@@ -30,7 +30,13 @@ function GameBrowser({ wsCreateRoom, wsSearchRooms, wsJoinRoom, roomName, rooms 
       label: '',
       className: classNames(styles['join-button'], 'col-3'),
       render: (row) => (
-        <Button onClick={() => wsJoinRoom(row.name)} className={styles['create-button']}>
+        <Button
+          onClick={() => {
+            wsJoinRoom(row.name);
+            history.push('/play/game-room');
+          }}
+          className={styles['create-button']}
+        >
           JOIN
         </Button>
       ),
@@ -41,16 +47,10 @@ function GameBrowser({ wsCreateRoom, wsSearchRooms, wsJoinRoom, roomName, rooms 
     wsSearchRooms();
   }, []);
 
-  useEffect(() => {
-    if (roomName) {
-      history.push('/play/game-room');
-    }
-  }, [roomName]);
-
   return (
     <Screen>
       <Navbar>
-        <NavDefault label="GAME BROWSER" />
+        <NavDefault onClick={() => history.push('/play')} label="GAME BROWSER" />
       </Navbar>
       <div className={styles.row}>
         <Button
@@ -72,7 +72,10 @@ function GameBrowser({ wsCreateRoom, wsSearchRooms, wsJoinRoom, roomName, rooms 
       </div>
       <div className={styles.row}>
         <Button
-          onClick={() => wsCreateRoom()}
+          onClick={() => {
+            wsCreateRoom();
+            history.push('/play/game-room');
+          }}
           icon={<Plus />}
           size="large"
           iconSize="small"

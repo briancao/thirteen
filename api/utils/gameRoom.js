@@ -5,6 +5,7 @@ export const WS_DISCONNECTED = 'WS_DISCONNECT';
 export const WS_JOIN_QUICK_GAME = 'WS_JOIN_QUICK_GAME';
 export const WS_CREATE_ROOM = 'WS_CREATE_ROOM';
 export const WS_JOIN_ROOM = 'WS_JOIN_ROOM';
+export const WS_LEAVE_ROOM = 'WS_LEAVE_ROOM';
 export const WS_SEARCH_ROOMS = 'WS_SEARCH_ROOMS';
 export const WS_LIST_PLAYERS = 'WS_LIST_PLAYERS';
 
