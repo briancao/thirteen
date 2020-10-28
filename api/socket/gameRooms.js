@@ -70,8 +70,6 @@ function joinRoom(roomName, users, socket, io) {
 }
 
 function leaveRoom(roomName, users, socket, io) {
-  console.log(1);
-
   socket.leave(roomName);
   socket.emit(actions.WS_LEAVE_ROOM, roomName);
   listRoomPlayers(roomName, users, socket, io);

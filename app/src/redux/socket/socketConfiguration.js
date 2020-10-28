@@ -8,7 +8,6 @@ import {
   WS_SEARCH_ROOMS,
   updateConnection,
 } from './actions';
-import * as playerHand from '../playerHand/actions';
 import * as gameRoom from '../gameRoom/actions';
 import * as gameBrowser from '../gameBrowser/actions';
 
