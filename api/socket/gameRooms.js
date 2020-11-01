@@ -24,17 +24,17 @@ export const gameRooms = (server) => {
     console.log('Socket Connection Made', id);
     console.log('User:', user);
 
-    socket.on(actions.WS_CREATE_ROOM, () => createRoom(socket, io));
-    socket.on(actions.WS_JOIN_ROOM, (roomName) => joinRoom(roomName, users, socket, io));
-    socket.on(actions.WS_LEAVE_ROOM, (roomName) => leaveRoom(roomName, users, socket, io));
-    socket.on(actions.WS_SEARCH_ROOMS, (search) => searchRooms(search, users, socket, io));
-    socket.on(actions.WS_LIST_PLAYERS, () => listRoomPlayers(users, socket, io));
+    socket.on(actions.WS_ROOM_CREATE, () => roomCreate(socket, io));
+    socket.on(actions.WS_ROOM_JOIN, (roomName) => roomJoin(roomName, users, socket, io));
+    socket.on(actions.WS_ROOM_LEAVE, (roomName) => roomLeave(roomName, users, socket, io));
+    socket.on(actions.WS_ROOM_SEARCH, (search) => roomSearch(search, users, socket, io));
+    socket.on(actions.WS_ROOM_LIST_PLAYERS, () => roomListPlayers(users, socket, io));
 
     socket.on('disconnect', () => {
       // Emit player left to all joined rooms
       Object.keys(socket.adapter.rooms).forEach((roomName) => {
         if (!!socket.adapter.rooms[roomName] && roomName.length === 4) {
-          listRoomPlayers(roomName, users, socket, io);
+          roomListPlayers(roomName, users, socket, io);
         }
       });
 
@@ -45,44 +45,44 @@ export const gameRooms = (server) => {
   });
 };
 
-function createRoom(socket, io) {
+function roomCreate(socket, io) {
   const roomName = generateGameRoomName(socket);
 
   socket.join(roomName);
-  socket.emit(actions.WS_CREATE_ROOM, roomName);
-  socket.to(roomName).emit(actions.WS_CREATE_ROOM);
+  socket.emit(actions.WS_ROOM_CREATE, roomName);
+  socket.to(roomName).emit(actions.WS_ROOM_CREATE);
 }
 
-function joinRoom(roomName, users, socket, io) {
+function roomJoin(roomName, users, socket, io) {
   const {
     adapter: { rooms },
   } = io.of('/game-room');
 
   if (!rooms[roomName]) {
-    socket.emit(actions.WS_JOIN_ROOM, { error: `Room ${roomName} does not exists` });
-  } else if (rooms[roomName].length >= 4) {
-    socket.emit(actions.WS_JOIN_ROOM, { error: `Room ${roomName} is full` });
+    socket.emit(actions.WS_ROOM_JOIN, { error: `Room ${roomName} does not exists` });
+  } else if (rooms[roomName].length > 4) {
+    socket.emit(actions.WS_ROOM_JOIN, { error: `Room ${roomName} is full` });
   } else {
     socket.join(roomName);
-    socket.emit(actions.WS_JOIN_ROOM, { roomName });
-    listRoomPlayers(roomName, users, socket, io);
+    socket.emit(actions.WS_ROOM_JOIN, { roomName });
+    roomListPlayers(roomName, users, socket, io);
   }
 }
 
-function leaveRoom(roomName, users, socket, io) {
+function roomLeave(roomName, users, socket, io) {
   socket.leave(roomName);
-  socket.emit(actions.WS_LEAVE_ROOM, roomName);
-  listRoomPlayers(roomName, users, socket, io);
+  socket.emit(actions.WS_ROOM_LEAVE, roomName);
+  roomListPlayers(roomName, users, socket, io);
 }
 
-function searchRooms(search, users, socket, io) {
+function roomSearch(search, users, socket, io) {
   const {
     adapter: { rooms },
   } = io.of('/game-room');
 
   const gameRooms = Object.keys(rooms).reduce((acc, roomName) => {
     if (roomName.length === 4 && (!search || roomName.includes(search))) {
-      const players = getRoomPlayers(rooms[roomName], users);
+      const players = roomGetPlayers(rooms[roomName], users);
 
       var room = {
         name: roomName,
@@ -95,10 +95,11 @@ function searchRooms(search, users, socket, io) {
     return acc;
   }, []);
 
-  socket.emit(actions.WS_SEARCH_ROOMS, gameRooms);
+  socket.emit(actions.WS_ROOM_SEARCH, gameRooms);
 }
 
-function listRoomPlayers(roomName, users, socket, io) {
+// Emits list of players in gameRoom
+function roomListPlayers(roomName, users, socket, io) {
   const {
     adapter: { rooms },
   } = io.of('/game-room');
@@ -106,16 +107,20 @@ function listRoomPlayers(roomName, users, socket, io) {
   if (rooms[roomName]) {
     io.of('/game-room')
       .to(roomName)
-      .emit(actions.WS_LIST_PLAYERS, getRoomPlayers(rooms[roomName], users));
+      .emit(actions.WS_ROOM_LIST_PLAYERS, roomGetPlayers(rooms[roomName], users, socket, io));
   }
 }
 
-function getRoomPlayers(room, users) {
+// Return Array of players in room
+function roomGetPlayers(room, users, socket, io) {
   const { sockets } = room;
 
   let host = false;
 
-  return Object.keys(sockets).reduce((players, c) => {
+  const players = Object.keys(sockets).reduce((players, c) => {
+
+    console.log(sockets);
+
     if (sockets[c]) {
       const user = { ...users[c] };
 
@@ -128,4 +133,8 @@ function getRoomPlayers(room, users) {
 
     return players;
   }, []);
+
+  console.log(players);
+
+  return players;
 }
